@@ -56,6 +56,7 @@ export const UI_STRINGS = {
     ai_welcome: "您好！我是东北人口研究专家助手。我已深度学习 2024 年核心学术成果，请问您想从哪个维度展开研究？",
     role_scholar: "学术视角", role_policy: "政策规划", role_analyst: "数据建模",
     map_pop_title: "人口密度与风险空间分布", map_legend_shrink: "预测收缩强度", map_province_hlj: "黑龙江", map_province_jl: "吉林", map_province_ln: "辽宁"
+    nav_commentary: "新闻评论",
   },
   de: {
     nav_summary: "Home", nav_data: "Trends", nav_map: "Karte", nav_modeling: "Simulation", nav_challenges: "Kernfragen", nav_policy: "Strategien", nav_ai: "KI-Experte",
@@ -65,5 +66,6 @@ export const UI_STRINGS = {
     ai_welcome: "Hallo! Ich bin Ihr KI-Experte für die Demografie Nordostchinas. Aus welcher Perspektive möchten Sie forschen?",
     role_scholar: "Akademisch", role_policy: "Strategisch", role_analyst: "Analytisch",
     map_pop_title: "Bevölkerungsdichte & Risikoanalyse", map_legend_shrink: "Schrumpfungsintensität", map_province_hlj: "Heilongjiang", map_province_jl: "Jilin", map_province_ln: "Liaoning"
+  nav_commentary: "Kommentar",
   }
 };

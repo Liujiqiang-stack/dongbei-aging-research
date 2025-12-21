@@ -17,6 +17,7 @@ export enum AnalysisView {
   MODELING = 'modeling',
   CHALLENGES = 'challenges',
   POLICY = 'policy',
+  COMMENTARY = "COMMENTARY",
   AI_CHAT = 'ai_chat'
 }
 

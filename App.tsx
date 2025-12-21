@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import { AnalysisView, Language } from './types';
 import { UI_STRINGS } from './constants';
+
 import Dashboard from './components/Dashboard';
 import DataAnalysis from './components/DataAnalysis';
 import ChallengesView from './components/ChallengesView';
@@ -10,6 +10,8 @@ import ChatBot from './components/ChatBot';
 import ModelingTool from './components/ModelingTool';
 import MapView from './components/MapView';
 
+import commentaryMd from './dongbei_commentary_clean.md?raw';
+import CommentaryView from './components/CommentaryView';
 
 // Language bootstrap: remember last choice; otherwise follow browser preference.
 const getInitialLang = (): Language => {
@@ -38,15 +40,15 @@ const App: React.FC = () => {
     setActiveView(AnalysisView.AI_CHAT);
   };
 
-  const NavItem = ({ view, label, icon }: { view: AnalysisView, label: string, icon: string }) => (
+  const NavItem = ({ view, label, icon }: { view: AnalysisView; label: string; icon: string }) => (
     <button
       onClick={() => {
         setActiveView(view);
         if (view !== AnalysisView.AI_CHAT) setPrefilledQuery(null);
       }}
       className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300 ${
-        activeView === view 
-          ? 'bg-blue-600 text-white shadow-lg scale-105' 
+        activeView === view
+          ? 'bg-blue-600 text-white shadow-lg scale-105'
           : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'
       }`}
     >
@@ -59,7 +61,10 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveView(AnalysisView.SUMMARY)}>
+          <div
+            className="flex items-center space-x-3 group cursor-pointer"
+            onClick={() => setActiveView(AnalysisView.SUMMARY)}
+          >
             <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl flex items-center justify-center text-white text-2xl font-black shadow-lg">
               {currentLang === 'zh' ? '智' : 'D'}
             </div>
@@ -72,8 +77,9 @@ const App: React.FC = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-4">
+            {/* ✅ 这里就是导航栏 */}
             <nav className="flex space-x-1 bg-gray-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar">
               <NavItem view={AnalysisView.SUMMARY} label={t.nav_summary} icon="📄" />
               <NavItem view={AnalysisView.DATA_VIS} label={t.nav_data} icon="📈" />
@@ -81,12 +87,30 @@ const App: React.FC = () => {
               <NavItem view={AnalysisView.MODELING} label={t.nav_modeling} icon="🧪" />
               <NavItem view={AnalysisView.CHALLENGES} label={t.nav_challenges} icon="⚠️" />
               <NavItem view={AnalysisView.POLICY} label={t.nav_policy} icon="💡" />
+
+              {/* ✅ 新增：新闻评论（放在 政策 / AI 之间） */}
+              <NavItem view={AnalysisView.COMMENTARY} label={t.nav_commentary} icon="📰" />
+
               <NavItem view={AnalysisView.AI_CHAT} label={t.nav_ai} icon="🤖" />
             </nav>
-            
+
             <div className="flex border border-gray-200 rounded-lg overflow-hidden shrink-0 shadow-sm">
-              <button onClick={() => setCurrentLang('zh')} className={`px-2 py-1 text-[10px] font-bold ${currentLang === 'zh' ? 'bg-blue-600 text-white' : 'bg-white text-gray-400'}`}>CN</button>
-              <button onClick={() => setCurrentLang('de')} className={`px-2 py-1 text-[10px] font-bold ${currentLang === 'de' ? 'bg-blue-600 text-white' : 'bg-white text-gray-400'}`}>DE</button>
+              <button
+                onClick={() => setCurrentLang('zh')}
+                className={`px-2 py-1 text-[10px] font-bold ${
+                  currentLang === 'zh' ? 'bg-blue-600 text-white' : 'bg-white text-gray-400'
+                }`}
+              >
+                CN
+              </button>
+              <button
+                onClick={() => setCurrentLang('de')}
+                className={`px-2 py-1 text-[10px] font-bold ${
+                  currentLang === 'de' ? 'bg-blue-600 text-white' : 'bg-white text-gray-400'
+                }`}
+              >
+                DE
+              </button>
             </div>
           </div>
         </div>
@@ -100,10 +124,16 @@ const App: React.FC = () => {
           {activeView === AnalysisView.MODELING && <ModelingTool onAskAI={handleAskAI} lang={currentLang} />}
           {activeView === AnalysisView.CHALLENGES && <ChallengesView onAskAI={handleAskAI} lang={currentLang} />}
           {activeView === AnalysisView.POLICY && <PolicyView lang={currentLang} />}
+
+          {/* ✅ 新增：评论页渲染（否则点击按钮不会显示） */}
+          {activeView === AnalysisView.COMMENTARY && (
+            <CommentaryView lang={currentLang} markdown={commentaryMd} />
+          )}
+
           {activeView === AnalysisView.AI_CHAT && (
-            <ChatBot 
-              prefilledQuery={prefilledQuery} 
-              onClearPrefill={() => setPrefilledQuery(null)} 
+            <ChatBot
+              prefilledQuery={prefilledQuery}
+              onClearPrefill={() => setPrefilledQuery(null)}
               lang={currentLang}
             />
           )}
@@ -113,8 +143,13 @@ const App: React.FC = () => {
       <footer className="bg-white border-t border-gray-200 py-8">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs">
           <div className="mb-4 md:mb-0">
-            <p className="font-bold text-gray-600">Decision Support System for Northeast China Demographic Change</p>
-            <p className="mt-1 italic">Interdisziplinäres Forschungs-Tool | {currentLang === 'zh' ? '学术引用: 人口学刊 2024.1' : 'Referenz: Population Journal 2024.1'}</p>
+            <p className="font-bold text-gray-600">
+              Decision Support System for Northeast China Demographic Change
+            </p>
+            <p className="mt-1 italic">
+              Interdisziplinäres Forschungs-Tool |{' '}
+              {currentLang === 'zh' ? '学术引用: 人口学刊 2024.1' : 'Referenz: Population Journal 2024.1'}
+            </p>
           </div>
         </div>
       </footer>
