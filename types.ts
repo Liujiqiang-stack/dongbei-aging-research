@@ -1,3 +1,4 @@
+// src/types.ts
 
 export type Language = 'zh' | 'de' | 'en' | 'ru';
 
@@ -17,8 +18,8 @@ export enum AnalysisView {
   MODELING = 'modeling',
   CHALLENGES = 'challenges',
   POLICY = 'policy',
-  COMMENTARY = "COMMENTARY",
-  AI_CHAT = 'ai_chat'
+  COMMENTARY = 'commentary',
+  AI_CHAT = 'ai_chat',
 }
 
 export interface ChatMessage {

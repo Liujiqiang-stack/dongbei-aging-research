@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useEffect, useState } from 'react';
 import { AnalysisView, Language } from './types';
 import { UI_STRINGS } from './constants';
@@ -79,7 +80,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            {/* ✅ 这里就是导航栏 */}
+            {/* ✅ 导航栏 */}
             <nav className="flex space-x-1 bg-gray-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar">
               <NavItem view={AnalysisView.SUMMARY} label={t.nav_summary} icon="📄" />
               <NavItem view={AnalysisView.DATA_VIS} label={t.nav_data} icon="📈" />
@@ -87,10 +88,8 @@ const App: React.FC = () => {
               <NavItem view={AnalysisView.MODELING} label={t.nav_modeling} icon="🧪" />
               <NavItem view={AnalysisView.CHALLENGES} label={t.nav_challenges} icon="⚠️" />
               <NavItem view={AnalysisView.POLICY} label={t.nav_policy} icon="💡" />
-
-              {/* ✅ 新增：新闻评论（放在 政策 / AI 之间） */}
+              {/* ✅ 新闻评论（政策/AI 之间） */}
               <NavItem view={AnalysisView.COMMENTARY} label={t.nav_commentary} icon="📰" />
-
               <NavItem view={AnalysisView.AI_CHAT} label={t.nav_ai} icon="🤖" />
             </nav>
 
@@ -125,7 +124,7 @@ const App: React.FC = () => {
           {activeView === AnalysisView.CHALLENGES && <ChallengesView onAskAI={handleAskAI} lang={currentLang} />}
           {activeView === AnalysisView.POLICY && <PolicyView lang={currentLang} />}
 
-          {/* ✅ 新增：评论页渲染（否则点击按钮不会显示） */}
+          {/* ✅ 评论页渲染 */}
           {activeView === AnalysisView.COMMENTARY && (
             <CommentaryView lang={currentLang} markdown={commentaryMd} />
           )}
@@ -143,9 +142,7 @@ const App: React.FC = () => {
       <footer className="bg-white border-t border-gray-200 py-8">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs">
           <div className="mb-4 md:mb-0">
-            <p className="font-bold text-gray-600">
-              Decision Support System for Northeast China Demographic Change
-            </p>
+            <p className="font-bold text-gray-600">Decision Support System for Northeast China Demographic Change</p>
             <p className="mt-1 italic">
               Interdisziplinäres Forschungs-Tool |{' '}
               {currentLang === 'zh' ? '学术引用: 人口学刊 2024.1' : 'Referenz: Population Journal 2024.1'}
