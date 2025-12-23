@@ -1,5 +1,5 @@
-// constants.tsx
-import { PopulationData } from './types';
+// src/constants.tsx
+import { PopulationData, Language } from './types';
 
 export const TOTAL_POP_DATA: PopulationData[] = [
   { year: '2000', national: 129533, neChina: 10655, liaoning: 4238, jilin: 2728, heilongjiang: 3689 },
@@ -22,7 +22,11 @@ export const ELDERLY_POP_DATA: PopulationData[] = [
   { year: '2050(E)', national: 40199, neChina: 2630, liaoning: 1174, jilin: 642, heilongjiang: 814 },
 ];
 
-export const PAPER_CONTENT = {
+// ✅ 关键：必须存在这个导出，否则 Dashboard 会白屏
+export const PAPER_CONTENT: Record<
+  Exclude<Language, 'en'>,
+  { title: string; author: string; summary: string; corePoints: string[] }
+> = {
   zh: {
     title: '东北地区人口高质量发展面临的新挑战',
     author: '于潇, 高震极 (2024)',
@@ -47,74 +51,133 @@ export const PAPER_CONTENT = {
       'Shrinking Cities: 91,8% der Städte verzeichnen Rückgang',
     ],
   },
+  ru: {
+    title: 'Новые вызовы для высококачественного демографического развития Северо-Восточного Китая',
+    author: 'Юй Сяо, Гао Чжэньцзи (2024)',
+    summary:
+      'Исследование показывает ускорение депопуляции на Северо-Востоке Китая: к 2050 году численность трудоспособного населения может сократиться до одной трети, а старение окажется значительно выше общенационального уровня. 34 из 37 городов сокращаются. Рекомендации: повышение качества человеческого капитала, поддержка рождаемости и цифровизация сельского хозяйства.',
+    corePoints: [
+      'Ускорение снижения: до -43,2% в Хэйлунцзяне к 2050 г.',
+      'Сжатие рабочей силы: -55,2% трудоспособного населения в регионе',
+      'Глубокое старение: пик около 2040 г., раньше среднего по стране',
+      'Сокращающиеся города: 91,8% городов теряют население',
+    ],
+  },
 };
 
-export const UI_STRINGS = {
+export const UI_STRINGS: Record<Exclude<Language, 'en'>, any> = {
   zh: {
-    nav_summary: "首页",
-    nav_data: "趋势分析",
-    nav_map: "地理图谱",
-    nav_modeling: "仿真模拟",
-    nav_challenges: "核心挑战",
-    nav_policy: "振兴对策",
-    nav_commentary: "新闻评论",
-    nav_ai: "AI 智库",
+    nav_summary: '首页',
+    nav_data: '趋势分析',
+    nav_map: '地理图谱',
+    nav_modeling: '仿真模拟',
+    nav_challenges: '核心挑战',
+    nav_policy: '振兴对策',
+    nav_commentary: '新闻评论',
+    nav_ai: 'AI 智库',
 
-    stat_drop: "2050 预测峰值降幅",
-    stat_labor: "劳动力资源损耗",
-    stat_cities: "城市收缩指数",
-    stat_peak: "深度老龄化拐点",
+    stat_drop: '2050 预测峰值降幅',
+    stat_labor: '劳动力资源损耗',
+    stat_cities: '城市收缩指数',
+    stat_peak: '深度老龄化拐点',
 
-    sim_title: "战略决策参数",
-    sim_fertility: "总和生育率 (TFR)",
-    sim_migration: "年均迁出率",
-    sim_retirement: "退休制度调整",
-    sim_btn: "提交 AI 专家系统审计模型",
-    sim_chart_title: "战略预测：东北人口动态演变",
+    sim_title: '战略决策参数',
+    sim_fertility: '总和生育率 (TFR)',
+    sim_migration: '年均迁出率',
+    sim_retirement: '退休制度调整',
+    sim_btn: '提交 AI 专家系统审计模型',
+    sim_chart_title: '战略预测：东北人口动态演变',
 
-    ai_welcome: "您好！我是东北人口研究专家助手。我已深度学习 2024 年核心学术成果，请问您想从哪个维度展开研究？",
-    role_scholar: "学术视角",
-    role_policy: "政策规划",
-    role_analyst: "数据建模",
+    ai_welcome:
+      '您好！我是东北人口研究专家助手。我已深度学习 2024 年核心学术成果，请问您想从哪个维度展开研究？',
+    role_scholar: '学术视角',
+    role_policy: '政策规划',
+    role_analyst: '数据建模',
 
-    map_pop_title: "人口密度与风险空间分布",
-    map_legend_shrink: "预测收缩强度",
-    map_province_hlj: "黑龙江",
-    map_province_jl: "吉林",
-    map_province_ln: "辽宁",
+    map_pop_title: '人口密度与风险空间分布',
+    map_legend_shrink: '预测收缩强度',
+    map_province_hlj: '黑龙江',
+    map_province_jl: '吉林',
+    map_province_ln: '辽宁',
+
+    // ✅ Dashboard 里用到了
+    dashboard_badge: '研究工作台',
   },
 
   de: {
-    nav_summary: "Home",
-    nav_data: "Trends",
-    nav_map: "Karte",
-    nav_modeling: "Simulation",
-    nav_challenges: "Kernfragen",
-    nav_policy: "Strategien",
-    nav_commentary: "Kommentar",
-    nav_ai: "KI-Experte",
+    nav_summary: 'Home',
+    nav_data: 'Trends',
+    nav_map: 'Karte',
+    nav_modeling: 'Simulation',
+    nav_challenges: 'Kernfragen',
+    nav_policy: 'Strategien',
+    nav_commentary: 'Kommentar',
+    nav_ai: 'KI-Experte',
 
-    stat_drop: "Max. Rückgang 2050",
-    stat_labor: "Arbeitskraftverlust",
-    stat_cities: "Stadtschrumpfung",
-    stat_peak: "Peak Überalterung",
+    stat_drop: 'Max. Rückgang 2050',
+    stat_labor: 'Arbeitskraftverlust',
+    stat_cities: 'Stadtschrumpfung',
+    stat_peak: 'Peak Überalterung',
 
-    sim_title: "Strategische Parameter",
-    sim_fertility: "Fertilität (TFR)",
-    sim_migration: "Migration p.a.",
-    sim_retirement: "Rentenanpassung",
-    sim_btn: "Modell durch KI-Experten prüfen",
-    sim_chart_title: "Strategische Prognose: Demografie Nordostchina",
+    sim_title: 'Strategische Parameter',
+    sim_fertility: 'Fertilität (TFR)',
+    sim_migration: 'Migration p.a.',
+    sim_retirement: 'Rentenanpassung',
+    sim_btn: 'Modell durch KI-Experten prüfen',
+    sim_chart_title: 'Strategische Prognose: Demografie Nordostchina',
 
-    ai_welcome: "Hallo! Ich bin Ihr KI-Experte für die Demografie Nordostchinas. Aus welcher Perspektive möchten Sie forschen?",
-    role_scholar: "Akademisch",
-    role_policy: "Strategisch",
-    role_analyst: "Analytisch",
+    ai_welcome:
+      'Hallo! Ich bin Ihr KI-Experte für die Demografie Nordostchinas. Aus welcher Perspektive möchten Sie forschen?',
+    role_scholar: 'Akademisch',
+    role_policy: 'Strategisch',
+    role_analyst: 'Analytisch',
 
-    map_pop_title: "Bevölkerungsdichte & Risikoanalyse",
-    map_legend_shrink: "Schrumpfungsintensität",
-    map_province_hlj: "Heilongjiang",
-    map_province_jl: "Jilin",
-    map_province_ln: "Liaoning",
-  }
+    map_pop_title: 'Bevölkerungsdichte & Risikoanalyse',
+    map_legend_shrink: 'Schrumpfungsintensität',
+    map_province_hlj: 'Heilongjiang',
+    map_province_jl: 'Jilin',
+    map_province_ln: 'Liaoning',
+
+    // ✅ Dashboard 里用到了
+    dashboard_badge: 'RESEARCH SUITE',
+  },
+
+  ru: {
+    nav_summary: 'Главная',
+    nav_data: 'Тренды',
+    nav_map: 'Карта',
+    nav_modeling: 'Симуляция',
+    nav_challenges: 'Ключевые вызовы',
+    nav_policy: 'Стратегии',
+    nav_commentary: 'Комментарий',
+    nav_ai: 'AI-аналитик',
+
+    stat_drop: 'Макс. падение к 2050',
+    stat_labor: 'Потери рабочей силы',
+    stat_cities: 'Сокращение городов',
+    stat_peak: 'Пик старения',
+
+    sim_title: 'Стратегические параметры',
+    sim_fertility: 'Суммарная рождаемость (TFR)',
+    sim_migration: 'Миграция в год',
+    sim_retirement: 'Пенсионная реформа',
+    sim_btn: 'Проверить модель AI-экспертом',
+    sim_chart_title: 'Прогноз: демография Северо-Востока Китая',
+
+    ai_welcome:
+      'Здравствуйте! Я AI-эксперт по демографии Северо-Восточного Китая. С какой стороны вы хотите начать анализ?',
+    role_scholar: 'Академический',
+    role_policy: 'Стратегический',
+    role_analyst: 'Аналитический',
+
+    map_pop_title: 'Плотность населения и риск-карта',
+    map_legend_shrink: 'Интенсивность сокращения',
+    map_province_hlj: 'Хэйлунцзян',
+    map_province_jl: 'Цзилинь',
+    map_province_ln: 'Ляонин',
+
+    // ✅ Dashboard 里用到了
+    dashboard_badge: 'ИССЛЕДОВАТЕЛЬСКАЯ ПАНЕЛЬ',
+  },
 };
+
